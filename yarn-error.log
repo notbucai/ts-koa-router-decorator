@@ -1,0 +1,64 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn init
+
+PATH: 
+  /Users/bucai/flutter/flutter/bin:/Library/Java/JavaVirtualMachines/jdk1.8.0_221.jdk/Contents/Home/bin:/usr/local/Cellar/dart/2.4.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Library/Apple/bin:/Applications/VMware Fusion.app/Contents/Public:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/Xamarin Workbooks.app/Contents/SharedSupport/path-bin:/Users/bucai/flutter/flutter/bin:/Library/Java/JavaVirtualMachines/jdk1.8.0_221.jdk/Contents/Home/bin:/usr/local/Cellar/dart/2.4.1/bin:/Users/bucai/Library/Android/sdk/tools:/Users/bucai/Library/Android/sdk/tools/bin:/Users/bucai/Library/Android/sdk/platform-tools:/Users/bucai/Library/Android/sdk/emulator:/Users/bucai/.gradle/wrapper/dists/gradle-4.6-all/bcst21l2brirad8k2ben1letg/gradle-4.6/bin:.:/Users/bucai/Library/Android/sdk/tools:/Users/bucai/Library/Android/sdk/tools/bin:/Users/bucai/Library/Android/sdk/platform-tools:/Users/bucai/Library/Android/sdk/emulator:/Users/bucai/.gradle/wrapper/dists/gradle-4.6-all/bcst21l2brirad8k2ben1letg/gradle-4.6/bin:.
+
+Yarn version: 
+  1.16.0
+
+Node version: 
+  10.15.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: canceled
+      at Interface.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:125850:13)
+      at Interface.emit (events.js:182:13)
+      at Interface._ttyWrite (readline.js:783:16)
+      at ReadStream.onkeypress (readline.js:168:10)
+      at ReadStream.emit (events.js:182:13)
+      at emitKeys (internal/readline.js:424:14)
+      at emitKeys.next (<anonymous>)
+      at ReadStream.onData (readline.js:1022:36)
+      at ReadStream.emit (events.js:182:13)
+      at addChunk (_stream_readable.js:283:12)
+
+npm manifest: 
+  {
+    "name": "koa-router-decorator",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "commit": "git-cz",
+      "dev": "ts-node ./src/index -w"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/wuxinweb/ts-koa-router-decorator.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/wuxinweb/ts-koa-router-decorator/issues"
+    },
+    "homepage": "https://github.com/wuxinweb/ts-koa-router-decorator#readme",
+    "devDependencies": {
+      "cz-conventional-changelog": "^3.0.2"
+    },
+    "config": {
+      "commitizen": {
+        "path": "./node_modules/cz-conventional-changelog"
+      }
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

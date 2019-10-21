@@ -1,0 +1,18 @@
+{
+  "verbose": true,
+  "ignore": [
+    "*.test.js",
+    "fixtures/*",
+    "node_modules",
+    "dist"
+  ],
+  "ext": "js,jsx,ts,tsx,vue,json",
+  "watch": [
+    "test",
+    "src"
+  ],
+  "exec": "run-s dev:*",
+  "execMap": {
+    "ts": "ts-node"
+  }
+}
