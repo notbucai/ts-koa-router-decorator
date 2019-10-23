@@ -1,4 +1,4 @@
-import { Controller, GET, RequestBody, RequestParam, RequestQuery, POST } from '../core/RouterDecorator';
+import { Controller, GET, RequestBody, RequestParam, RequestQuery, POST, RequestHeader } from '../core/RouterDecorator';
 
 @Controller('/user')
 export default class {
@@ -10,9 +10,10 @@ export default class {
     @RequestParam('id') id: string,
     @RequestQuery('id2') id2: string,
     @RequestQuery('id') b: string,
-    @RequestBody s: {}
+    @RequestBody s: object,
+    @RequestHeader header: object
   ) {
-    console.log(id, id2, b, s, this.msg);
+    console.log(id, id2, b, s, this.msg, header);
     return {
       name: 123, code: -1, msg: "213", list: [{ xx: 123, name: 123 }],
     };

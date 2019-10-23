@@ -2,14 +2,14 @@
  * @Author: bucai
  * @Date: 2019-10-21 12:27:53
  * @LastEditors: bucai
- * @LastEditTime: 2019-10-21 17:20:15
+ * @LastEditTime: 2019-10-23 21:50:13
  * @Description: 装饰器列表
  */
 
 import consola from 'consola';
 
 export interface IRoute {
-  method: 'get' | 'post';
+  method: 'get' | 'post' | 'delete';
   path: string
 }
 export type IController = new () => {};
@@ -21,6 +21,9 @@ export interface IRouteConfig {
     [key: string]: string;
   };
   body?: {
+    index: number;
+  };
+  header?: {
     index: number;
   };
   route: IRoute,
@@ -67,6 +70,13 @@ export function POST(path: string) {
   return route({ path, method: 'post' });
 }
 /**
+ * DELETE - 路由
+ * @param path 路径
+ */
+export function DELETE(path: string) {
+  return route({ path, method: 'delete' });
+}
+/**
  * 解析 query
  * @param key key
  */
@@ -91,6 +101,17 @@ export function RequestBody(target: object, propertyKey: string, parameterIndex:
 
   Reflect.set(routeFn, 'body', {
     ...routeFn.body,
+    index: parameterIndex
+  });
+}
+/**
+ * 解析 header
+ * @param key index
+ */
+export function RequestHeader(target: object, propertyKey: string, parameterIndex: number) {
+  const routeFn = Reflect.get(target, propertyKey);
+  
+  Reflect.set(routeFn, 'header', {
     index: parameterIndex
   });
 }

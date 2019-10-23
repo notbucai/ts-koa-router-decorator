@@ -2,7 +2,7 @@
  * @Author: bucai
  * @Date: 2019-10-21 13:30:43
  * @LastEditors: bucai
- * @LastEditTime: 2019-10-21 16:06:19
+ * @LastEditTime: 2019-10-23 21:52:23
  * @Description: 将控制器解析成路由
  */
 import ParseController from './ParseController';
@@ -17,6 +17,8 @@ function packagingRoute(fn: IRouteFn, routeConfig: IRouteConfig) {
     const query = ctx.query;
     const body = ctx.request.body;
     const params = ctx.params;
+    const header = ctx.header;
+
     // 参数列表
     const args: Array<number | string | object> = [];
 
@@ -41,6 +43,13 @@ function packagingRoute(fn: IRouteFn, routeConfig: IRouteConfig) {
     if (Number.isInteger(bodyIndex)) {
       args[bodyIndex] = body;
     }
+    // 处理header参数 
+    const headerArgs = routeConfig.header || { index: NaN };
+    const headerIndex = headerArgs.index;
+
+    if (Number.isInteger(headerIndex)) {
+      args[headerIndex] = header;
+    }
 
     const resBody = fn(...args);
     ctx.body = resBody;
@@ -54,8 +63,7 @@ function RouteFnToRouteFactory(Controller: IController) {
     // 抽离 Fn
     const Fn = RouteFn.bind(controller);
     // 抽离 Route confg
-    const { route, param, query, body } = RouteFn;
-    const RouteCofnig: IRouteConfig = { route, param, query, body };
+    const RouteCofnig: IRouteConfig = { ...RouteFn };
 
     return packagingRoute(Fn, RouteCofnig);
   }
@@ -64,7 +72,10 @@ function RouteFnToRouteFactory(Controller: IController) {
 function toRoutePath(ControllerPath: string, RoutePath: string) {
   return ControllerPath + RoutePath;
 }
-
+/**
+ * 控制器生成路由的工厂
+ * @param router 路由对象
+ */
 function ControllerToRouteFactory(router: KoaRouter) {
   return (Controller: IController) => {
 
@@ -86,7 +97,7 @@ function ControllerToRouteFactory(router: KoaRouter) {
       const url = toRoutePath(cPath, rPath);
       consola.success(`      Route => [ ${url} ]`);
       router[method](url, route);
-      
+
     });
   }
 }
