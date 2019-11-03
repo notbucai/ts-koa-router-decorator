@@ -2,7 +2,7 @@
  * @Author: bucai
  * @Date: 2019-10-21 12:27:53
  * @LastEditors: bucai
- * @LastEditTime: 2019-10-23 21:50:13
+ * @LastEditTime: 2019-11-03 14:51:31
  * @Description: 装饰器列表
  */
 
@@ -20,6 +20,9 @@ export interface IRouteConfig {
   param?: {
     [key: string]: string;
   };
+  ctx?:{
+    index: number;
+  },
   body?: {
     index: number;
   };
@@ -30,7 +33,7 @@ export interface IRouteConfig {
 }
 
 export interface IRouteFn extends IRouteConfig {
-  (...ages: Array<number | string | object>): object | string;
+  (...ages: Array<number | string | object>): Promise<object | string>;
 }
 
 /**
@@ -77,6 +80,17 @@ export function DELETE(path: string) {
   return route({ path, method: 'delete' });
 }
 /**
+ * 解析 body
+ */
+export function RequestCtx(target: object, propertyKey: string, parameterIndex: number) {
+  const routeFn = Reflect.get(target, propertyKey);
+
+  Reflect.set(routeFn, 'ctx', {
+    ...routeFn.ctx,
+    index: parameterIndex
+  });
+}
+/**
  * 解析 query
  * @param key key
  */
@@ -110,7 +124,7 @@ export function RequestBody(target: object, propertyKey: string, parameterIndex:
  */
 export function RequestHeader(target: object, propertyKey: string, parameterIndex: number) {
   const routeFn = Reflect.get(target, propertyKey);
-  
+
   Reflect.set(routeFn, 'header', {
     index: parameterIndex
   });

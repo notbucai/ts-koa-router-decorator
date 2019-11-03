@@ -2,7 +2,7 @@
  * @Author: bucai
  * @Date: 2019-10-21 13:30:43
  * @LastEditors: bucai
- * @LastEditTime: 2019-10-23 21:52:23
+ * @LastEditTime: 2019-11-03 14:51:20
  * @Description: 将控制器解析成路由
  */
 import ParseController from './ParseController';
@@ -21,6 +21,16 @@ function packagingRoute(fn: IRouteFn, routeConfig: IRouteConfig) {
 
     // 参数列表
     const args: Array<number | string | object> = [];
+
+    // 处理ctx
+
+    // 处理body参数 
+    const koaArgs = routeConfig.ctx || { index: NaN };
+    const koaIndex = koaArgs.index;
+
+    if (Number.isInteger(koaIndex)) {
+      args[koaIndex] = ctx;
+    }
 
     // 处理params参数
     const paramsArgs = routeConfig.param || {};
@@ -51,8 +61,14 @@ function packagingRoute(fn: IRouteFn, routeConfig: IRouteConfig) {
       args[headerIndex] = header;
     }
 
-    const resBody = fn(...args);
-    ctx.body = resBody;
+    const resBody = (fn && await fn(...args)) || { code: 500 };
+
+    ctx.body = {
+      code: 200,
+      message: '',
+      data: resBody
+    };
+
   }
 }
 

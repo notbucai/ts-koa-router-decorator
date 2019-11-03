@@ -15,7 +15,20 @@ ControllersToRoutes(router);
 router.get('/', async (ctx, next) => {
 
 });
-
+// 全局错误状态管理
+app
+  .use(async (ctx, next) => {
+    try {
+      await next();
+    } catch (error) {
+      console.log(error);
+      const code = error.status || -1;
+      ctx.body = {
+        message: error.message,
+        code
+      };
+    }
+  });
 app
   .use(body())
   .use(router.routes())
