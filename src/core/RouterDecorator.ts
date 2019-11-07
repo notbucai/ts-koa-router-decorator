@@ -2,14 +2,14 @@
  * @Author: bucai
  * @Date: 2019-10-21 12:27:53
  * @LastEditors: bucai
- * @LastEditTime: 2019-11-03 14:51:31
+ * @LastEditTime: 2019-11-07 20:50:53
  * @Description: 装饰器列表
  */
 
 import consola from 'consola';
 
 export interface IRoute {
-  method: 'get' | 'post' | 'delete';
+  method: 'get' | 'post' | 'delete' | 'put' | 'options' | 'head' | 'patch';
   path: string
 }
 export type IController = new () => {};
@@ -20,7 +20,7 @@ export interface IRouteConfig {
   param?: {
     [key: string]: string;
   };
-  ctx?:{
+  ctx?: {
     index: number;
   },
   body?: {
@@ -80,6 +80,30 @@ export function DELETE(path: string) {
   return route({ path, method: 'delete' });
 }
 /**
+ * PUT - 路由
+ * @param path 路径
+ */
+export function PUT(path: string) {
+  return route({ path, method: 'put' });
+}
+/**
+ * HEAD - 路由
+ * @param path 路径
+ */
+export function HEAD(path: string) {
+  return route({ path, method: 'head' });
+}
+/**
+ * OPTIONS - 路由
+ * @param path 路径
+ */
+export function OPTIONS(path: string) {
+  return route({ path, method: 'options' });
+}
+
+
+
+/**
  * 解析 body
  */
 export function RequestCtx(target: object, propertyKey: string, parameterIndex: number) {
@@ -129,6 +153,7 @@ export function RequestHeader(target: object, propertyKey: string, parameterInde
     index: parameterIndex
   });
 }
+
 /**
  * 解析 param
  * @param key key
